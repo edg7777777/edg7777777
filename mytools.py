@@ -88,3 +88,17 @@ def 相关系数强弱判断(相关系数值):
 
 def 制作交叉表(数据表, 自变量, 因变量):
     return pd.crosstab(数据表[自变量], 数据表[因变量], normalize='columns', margins=True)
+
+def plot_variable_pie(data_table,variable):
+    #准备绘图数据
+    data = data_table[variable].value_counts()
+    #创建饼图
+    fig1,ax1 = plt.subplots()
+    ax1.pie(data,labels = data.index,autopct='%1.1f%%')
+    ax1.axis('equal') #Equal aspect ratio ensure that pie is drawn as acircle.
+    plt.show()
+def 读取SPSS数据(文件所在位置及名称):
+    """ 读取SPSS文件，保留标签内容和有序变量顺序 """
+    result, metadata = pyreadstat.read_sav(
+        文件所在位置及名称, apply_value_formats=True, formats_as_ordered_category=True)
+    return result, metadata
