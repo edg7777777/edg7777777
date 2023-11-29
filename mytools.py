@@ -97,8 +97,31 @@ def plot_variable_pie(data_table,variable):
     ax1.pie(data,labels = data.index,autopct='%1.1f%%')
     ax1.axis('equal') #Equal aspect ratio ensure that pie is drawn as acircle.
     plt.show()
+
 def 读取SPSS数据(文件所在位置及名称):
     """ 读取SPSS文件，保留标签内容和有序变量顺序 """
     result, metadata = pyreadstat.read_sav(
         文件所在位置及名称, apply_value_formats=True, formats_as_ordered_category=True)
     return result, metadata
+
+import pandas as pd  
+import numpy as np  
+import scipy.stats as stats  
+  
+def 计算单变量均值置信区间():
+# 打开数据文件
+    file_path = R"movie_data_cleaned.csv"
+    df_movies = pd.read_csv(file_path)
+# 计算均值和标准误差
+    mean = df_movies['average'].mean()
+    std_error = stats.sem(df_movies['average'])
+# 设定置信水平
+    confidence_level = 0.95
+# 设定自由度
+    自由度 = len(df_movies['average']) - 1
+# 计算置信区间
+    confidence_interval = stats.t.interval(confidence_level, 自由度, loc=mean, scale=std_error)
+# 输出结果
+    print(F"均值：{mean: .2f}")
+    print(F"均值在置信水平{confidence_level}下的置信区间为：", confidence_interval)
+  
